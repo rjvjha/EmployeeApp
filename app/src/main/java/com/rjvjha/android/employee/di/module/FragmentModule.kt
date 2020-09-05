@@ -1,14 +1,14 @@
 package com.rjvjha.android.employee.di.module
 
 import android.content.Context
-import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import com.rjvjha.android.employee.data.Repository.EmployeeRepository
 import com.rjvjha.android.employee.di.ActivityContext
 import com.rjvjha.android.employee.ui.base.BaseFragment
 import com.rjvjha.android.employee.ui.home.HomeViewModel
-import com.rjvjha.android.employee.ui.main.MainViewModel
-import com.rjvjha.android.employee.utils.NetworkHelper
+import com.rjvjha.android.employee.utils.network.NetworkHelper
 import com.rjvjha.android.employee.utils.ViewModelProviderFactory
+import com.rjvjha.android.employee.utils.rx.SchedulerProvider
 import dagger.Module
 import dagger.Provides
 import io.reactivex.disposables.CompositeDisposable
@@ -21,9 +21,9 @@ class FragmentModule(private val fragment: BaseFragment<*>) {
     fun provideContext(): Context = fragment.context!!
 
     @Provides
-    fun provideHomeViewModel(compositeDisposable: CompositeDisposable, networkHelper: NetworkHelper) : HomeViewModel =
+    fun provideHomeViewModel(schedulerProvider: SchedulerProvider, compositeDisposable: CompositeDisposable, networkHelper: NetworkHelper, employeeRepository: EmployeeRepository) : HomeViewModel =
 
         ViewModelProvider(fragment, ViewModelProviderFactory(HomeViewModel::class){
-            HomeViewModel(compositeDisposable,networkHelper)
+            HomeViewModel(schedulerProvider,compositeDisposable,networkHelper,employeeRepository)
         }).get(HomeViewModel::class.java)
 }

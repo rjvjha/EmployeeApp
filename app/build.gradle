@@ -17,8 +17,17 @@ android {
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
 
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+
     buildTypes {
+        debug {
+            buildConfigField("String", "BASE_URL", "\"https://reqres.in/api/\"")
+        }
         release {
+            buildConfigField("String", "BASE_URL", "\"https://reqres.in/api/\"")
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
@@ -27,12 +36,12 @@ android {
 
 dependencies {
     def lifecycle_version = "2.2.0"
-    def arch_version = "2.1.0"
+
     implementation fileTree(dir: "libs", include: ["*.jar"])
     implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
     implementation 'androidx.core:core-ktx:1.3.1'
     implementation 'androidx.appcompat:appcompat:1.2.0'
-    implementation 'androidx.constraintlayout:constraintlayout:2.0.0'
+    implementation 'androidx.constraintlayout:constraintlayout:2.0.1'
     implementation 'androidx.recyclerview:recyclerview:1.1.0'
     implementation 'androidx.cardview:cardview:1.0.0'
 
@@ -46,6 +55,18 @@ dependencies {
 
     implementation "com.google.dagger:dagger:2.24"
     kapt "com.google.dagger:dagger-compiler:2.21"
+
+
+    // networking
+    implementation 'com.squareup.retrofit2:retrofit:2.9.0'
+    implementation 'com.squareup.retrofit2:converter-gson:2.9.0'
+    implementation 'com.squareup.okhttp3:okhttp:4.8.0'
+    implementation 'com.squareup.okhttp3:logging-interceptor:4.3.1'
+    implementation 'com.squareup.retrofit2:adapter-rxjava2:2.9.0'
+
+    // Image
+    implementation "com.github.bumptech.glide:glide:4.11.0"
+    kapt "com.github.bumptech.glide:compiler:4.11.0"
 
     implementation 'io.reactivex.rxjava2:rxjava:2.2.3'
     implementation 'io.reactivex.rxjava2:rxandroid:2.1.0'

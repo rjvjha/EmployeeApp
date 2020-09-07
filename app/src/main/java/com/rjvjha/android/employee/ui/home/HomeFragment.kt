@@ -4,12 +4,15 @@ import android.os.Bundle
 import android.view.View
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModel
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.rjvjha.android.employee.R
 import com.rjvjha.android.employee.di.components.FragmentComponent
 import com.rjvjha.android.employee.ui.base.BaseFragment
 import com.rjvjha.android.employee.ui.base.BaseViewModel
+import com.rjvjha.android.employee.ui.home.adapter.EmployeeListAdapter
 import kotlinx.android.synthetic.main.activity_main.view.*
 import kotlinx.android.synthetic.main.fragment_home_layout.*
+import javax.inject.Inject
 
 class HomeFragment: BaseFragment<HomeViewModel>() {
 
@@ -25,12 +28,14 @@ class HomeFragment: BaseFragment<HomeViewModel>() {
         }
     }
 
+    @Inject
+    lateinit var listAdapter: EmployeeListAdapter
+
+    @Inject
+    lateinit var layoutManager:LinearLayoutManager
+
 
     override fun provideLayoutId(): Int = R.layout.fragment_home_layout
-
-    override fun setupView(view: View) {
-
-    }
 
     override fun setupObservers() {
         super.setupObservers()
@@ -44,12 +49,18 @@ class HomeFragment: BaseFragment<HomeViewModel>() {
 
         })
         viewModel.getEmpList().observe(this, Observer {
-          it?.run { textView.text = this.toString() }
+          it?.run { listAdapter.appendData(this)}
         })
     }
 
     override fun injectDependencies(fragmentComponent: FragmentComponent) {
         fragmentComponent.inject(this)
+    }
+
+
+    override fun setupView(view: View) {
+        recyclerView.layoutManager = layoutManager
+        recyclerView.adapter = listAdapter
     }
 
 

@@ -23,7 +23,7 @@ class HomeViewModel(
     private val employeeRepository: EmployeeRepository
     ): BaseViewModel(schedulerProvider,compositeDisposable, networkHelper) {
 
-    private val empList: MutableLiveData<Resource<List<Employee>>> = MutableLiveData()
+    val empList: MutableLiveData<Resource<List<Employee>>> = MutableLiveData()
 
     fun getEmpList(): LiveData<List<Employee>> =
         Transformations.map(empList) { it.data}

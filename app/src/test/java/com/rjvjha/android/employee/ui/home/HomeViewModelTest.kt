@@ -2,10 +2,12 @@ package com.rjvjha.android.employee.ui.home
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import androidx.lifecycle.Observer
+import com.rjvjha.android.employee.R
 import com.rjvjha.android.employee.data.Repository.EmployeeRepository
 import com.rjvjha.android.employee.data.model.Employee
 import com.rjvjha.android.employee.data.remote.response.EmployeeListResponse
 import com.rjvjha.android.employee.utils.common.Resource
+import com.rjvjha.android.employee.utils.common.Status
 import com.rjvjha.android.employee.utils.network.NetworkHelper
 import io.reactivex.Observable
 import io.reactivex.disposables.CompositeDisposable
@@ -82,7 +84,7 @@ class HomeViewModelTest {
             .`when`(networkHelper)
             .isNetworkConnected()
 
-       doReturn(Observable.just(employeeListResponse1))
+        doReturn(Observable.just(employeeListResponse1))
             .`when`(employeeRepository).fetchEmployeeList(1)
 
         doReturn(Observable.just(employeeListResponse2))
@@ -95,10 +97,23 @@ class HomeViewModelTest {
         verify(isEmpListFetchingObserver).onChanged(true)
         assert(homeViewModel.getEmpList().value == null)
         verify(empListObserver).onChanged(null)
+        assert(homeViewModel.empList.value?.status == Status.SUCCESS)
+        assert(homeViewModel.empList.value?.data == resultList)
         verify(empListObserver).onChanged(resultList)
         verify(isEmpListFetchingObserver).onChanged(false)
 
     }
+
+    @Test
+    fun givenNoInternet_whenLaunched_shouldShowNetworkError() {
+        doReturn(false)
+            .`when`(networkHelper)
+            .isNetworkConnected()
+        homeViewModel.onCreate()
+        assert(homeViewModel.messageStringId.value == Resource.error(R.string.network_connection_error))
+        verify(messageStringIdObserver).onChanged(Resource.error(R.string.network_connection_error))
+    }
+
 
     @After
     fun teardown(){

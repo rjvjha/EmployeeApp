@@ -5,6 +5,8 @@ import com.rjvjha.android.employee.EmployeeApplication
 import com.rjvjha.android.employee.data.remote.NetworkService
 import com.rjvjha.android.employee.data.remote.Networking
 import com.rjvjha.android.employee.di.ApplicationContext
+import com.rjvjha.android.employee.di.TempDirectory
+import com.rjvjha.android.employee.utils.common.FileUtils
 import com.rjvjha.android.employee.utils.network.NetworkHelper
 import com.rjvjha.android.employee.utils.rx.RxSchedulerProvider
 import com.rjvjha.android.employee.utils.rx.SchedulerProvider
@@ -24,6 +26,10 @@ class ApplicationModule(private val application: EmployeeApplication) {
     @Provides
     fun providesCompositeDisposable():CompositeDisposable = CompositeDisposable()
 
+    @Provides
+    @Singleton
+    @TempDirectory
+    fun provideTempDirectory() = FileUtils.getDirectory(application,"temp")
 
     @Provides
     fun provideSchedulerProvider(): SchedulerProvider = RxSchedulerProvider()

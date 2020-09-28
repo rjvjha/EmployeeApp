@@ -22,6 +22,10 @@ android {
         targetCompatibility JavaVersion.VERSION_1_8
     }
 
+    kotlinOptions {
+        jvmTarget = JavaVersion.VERSION_1_8.toString()
+    }
+
     buildTypes {
         debug {
             buildConfigField("String", "BASE_URL", "\"https://reqres.in/api/\"")
@@ -87,7 +91,9 @@ dependencies {
     androidTestImplementation "androidx.test.ext:junit:$test_ext_runner_version"
     androidTestImplementation "androidx.test.espresso:espresso-core:$espresso_version"
     androidTestImplementation "androidx.test.espresso:espresso-intents:$espresso_version"
+    androidTestImplementation "androidx.test.espresso:espresso-contrib:$espresso_version"
     androidTestImplementation "org.mockito:mockito-core:$mockito_version"
+    debugImplementation "androidx.fragment:fragment-testing:$fragment_version"
     kaptAndroidTest "com.google.dagger:dagger-compiler:$dagger_version"
 
 }

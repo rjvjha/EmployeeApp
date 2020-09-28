@@ -9,6 +9,7 @@ import androidx.test.platform.app.InstrumentationRegistry
 import com.rjvjha.android.employee.R
 import com.rjvjha.android.employee.TestComponentRule
 import com.rjvjha.android.employee.ui.main.MainActivity
+import com.rjvjha.android.employee.utils.RvMatcher
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test

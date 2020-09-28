@@ -12,6 +12,10 @@ annotation class ActivityContext
 
 @Qualifier
 @Retention(AnnotationRetention.SOURCE)
+annotation class TempDirectory
+
+@Qualifier
+@Retention(AnnotationRetention.SOURCE)
 annotation class DatabaseInfo
 
 @Qualifier

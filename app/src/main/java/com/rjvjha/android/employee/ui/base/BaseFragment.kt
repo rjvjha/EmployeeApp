@@ -24,6 +24,7 @@ abstract class BaseFragment<VM : BaseViewModel> : Fragment() {
     override fun onCreate(savedInstanceState: Bundle?) {
         injectDependencies(buildFragmentComponent())
         super.onCreate(savedInstanceState)
+        setHasOptionsMenu(true)
         setupObservers()
         viewModel.onCreate()
     }

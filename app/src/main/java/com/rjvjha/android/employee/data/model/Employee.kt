@@ -10,7 +10,7 @@ import org.jetbrains.annotations.NotNull
 @Entity(tableName = "employee")
 data class Employee(
 
-    @PrimaryKey(autoGenerate = true)
+    @PrimaryKey(autoGenerate = false)
     @NotNull
     @Expose
     @SerializedName("id")

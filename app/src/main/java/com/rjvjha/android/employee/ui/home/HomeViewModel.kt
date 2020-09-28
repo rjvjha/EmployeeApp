@@ -1,5 +1,6 @@
 package com.rjvjha.android.employee.ui.home
 
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Transformations
@@ -49,7 +50,23 @@ class HomeViewModel(
                             empList.postValue(Resource.error())
                         })
             )
+        } else if (empList.value == null && !networkHelper.isNetworkConnected()){
+            // no internet connection
+            empList.postValue(Resource.loading())
+            compositeDisposable.add(
+                employeeRepository.fetchEmployeeListFromLocal()
+                    .observeOn(schedulerProvider.io())
+                    .subscribeOn(schedulerProvider.io())
+                    .subscribe({
+                        empList.postValue(Resource.success(it))
+                    },{
+                        empList.postValue(Resource.error())
+                    })
+            )
+
         }
+
+
 
     }
 

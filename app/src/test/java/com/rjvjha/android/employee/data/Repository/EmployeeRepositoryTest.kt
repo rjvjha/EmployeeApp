@@ -1,5 +1,6 @@
 package com.rjvjha.android.employee.data.Repository
 
+import com.rjvjha.android.employee.data.local.db.DatabaseService
 import com.rjvjha.android.employee.data.model.Employee
 import com.rjvjha.android.employee.data.model.Organisation
 import com.rjvjha.android.employee.data.remote.NetworkService
@@ -25,11 +26,14 @@ class EmployeeRepositoryTest{
     @Mock
     private lateinit var networkService: NetworkService
 
+    @Mock
+    private lateinit var databaseService: DatabaseService
+
     private lateinit var employeeRepository: EmployeeRepository
 
     @Before
     fun  setup(){
-        employeeRepository = EmployeeRepository(networkService)
+        employeeRepository = EmployeeRepository(networkService,databaseService)
     }
 
     @Test

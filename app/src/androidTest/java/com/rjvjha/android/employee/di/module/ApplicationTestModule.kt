@@ -2,8 +2,10 @@ package com.rjvjha.android.employee.di.module
 
 import android.app.Application
 import android.content.Context
+import androidx.room.Room
 import com.rjvjha.android.employee.BuildConfig
 import com.rjvjha.android.employee.EmployeeApplication
+import com.rjvjha.android.employee.data.local.db.DatabaseService
 import com.rjvjha.android.employee.data.remote.NetworkService
 import com.rjvjha.android.employee.data.remote.Networking
 import com.rjvjha.android.employee.di.ApplicationContext
@@ -46,5 +48,11 @@ class ApplicationTestModule(private  val application: EmployeeApplication) {
             application.cacheDir,
             10*1024*1024 // 10MB
         )
+
+    @Singleton
+    @Provides
+    fun provideDatabaseService(): DatabaseService =
+        Room.databaseBuilder (
+            application, DatabaseService::class.java,"dummy-db").build()
 
 }

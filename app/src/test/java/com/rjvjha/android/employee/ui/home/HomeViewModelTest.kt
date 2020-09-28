@@ -10,6 +10,7 @@ import com.rjvjha.android.employee.utils.common.Resource
 import com.rjvjha.android.employee.utils.common.Status
 import com.rjvjha.android.employee.utils.network.NetworkHelper
 import io.reactivex.Observable
+import io.reactivex.Single
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.TestScheduler
 import org.junit.After
@@ -105,13 +106,31 @@ class HomeViewModelTest {
     }
 
     @Test
-    fun givenNoInternet_whenLaunched_shouldShowNetworkError() {
+    fun givenNoInternet_whenLaunched_shouldReturnDataFromLocal() {
+        val localList = listOf(
+            Employee(1,"dummy@gmail.com", "Rajeev", "Jha","")
+            , Employee(2,"dummy@gmail.com", "Rajeev", "Jha","")
+            , Employee(3,"dummy@gmail.com", "Rajeev", "Jha","")
+        )
         doReturn(false)
             .`when`(networkHelper)
             .isNetworkConnected()
+
+        doReturn(Single.just(localList))
+            .`when`(employeeRepository)
+            .fetchEmployeeListFromLocal()
+
         homeViewModel.onCreate()
+        testScheduler.triggerActions()
+        verify(isEmpListFetchingObserver).onChanged(true)
+        assert(homeViewModel.getEmpList().value == null)
+        verify(empListObserver).onChanged(null)
         assert(homeViewModel.messageStringId.value == Resource.error(R.string.network_connection_error))
         verify(messageStringIdObserver).onChanged(Resource.error(R.string.network_connection_error))
+        assert(homeViewModel.empList.value?.status == Status.SUCCESS)
+        assert(homeViewModel.empList.value?.data == localList)
+        verify(empListObserver).onChanged(localList)
+        verify(isEmpListFetchingObserver).onChanged(false)
     }
 
 

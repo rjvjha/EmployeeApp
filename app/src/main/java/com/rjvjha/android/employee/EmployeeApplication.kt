@@ -1,12 +1,9 @@
 package com.rjvjha.android.employee
 
 import android.app.Application
-import com.rjvjha.android.employee.data.local.DatabaseService
-import com.rjvjha.android.employee.data.remote.NetworkService
 import com.rjvjha.android.employee.di.components.ApplicationComponent
 import com.rjvjha.android.employee.di.components.DaggerApplicationComponent
 import com.rjvjha.android.employee.di.module.ApplicationModule
-import javax.inject.Inject
 
 class EmployeeApplication: Application() {
 

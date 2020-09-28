@@ -1,7 +1,10 @@
 package com.rjvjha.android.employee.di.module
 import android.content.Context
+import androidx.room.Room
+import androidx.room.RoomDatabase
 import com.rjvjha.android.employee.BuildConfig
 import com.rjvjha.android.employee.EmployeeApplication
+import com.rjvjha.android.employee.data.local.db.DatabaseService
 import com.rjvjha.android.employee.data.remote.NetworkService
 import com.rjvjha.android.employee.data.remote.Networking
 import com.rjvjha.android.employee.di.ApplicationContext
@@ -44,4 +47,9 @@ class ApplicationModule(private val application: EmployeeApplication) {
         10*1024*1024 // 10MB
     )
 
+    @Singleton
+    @Provides
+    fun provideDatabaseService(): DatabaseService =
+        Room.databaseBuilder (
+        application, DatabaseService::class.java,"dummy-db").build()
 }

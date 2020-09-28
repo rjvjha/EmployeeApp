@@ -1,4 +1,6 @@
 package com.rjvjha.android.employee.di.module
+
+import android.app.Application
 import android.content.Context
 import com.rjvjha.android.employee.BuildConfig
 import com.rjvjha.android.employee.EmployeeApplication
@@ -14,10 +16,11 @@ import io.reactivex.disposables.CompositeDisposable
 import javax.inject.Singleton
 
 @Module
-class ApplicationModule(private val application: EmployeeApplication) {
+class ApplicationTestModule(private  val application: EmployeeApplication) {
 
-    @ApplicationContext
+
     @Provides
+    @Singleton
     fun provideContext(): Context = application
 
 
@@ -33,9 +36,9 @@ class ApplicationModule(private val application: EmployeeApplication) {
     @Provides
     fun providesNetworkService():NetworkService =
         Networking.create (
-        BuildConfig.BASE_URL,
-        application.cacheDir,
-        10*1024*1024 // 10MB
-    )
+            BuildConfig.BASE_URL,
+            application.cacheDir,
+            10*1024*1024 // 10MB
+        )
 
 }

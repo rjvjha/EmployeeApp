@@ -13,8 +13,8 @@ class SaveEmployeeWorkerClass (private  val context:Context, workerParameters: W
 
 
     override fun doWork(): Result {
-        val databaseService = (context as EmployeeApplication).databaseService
-        val emp = Employee(16,"dummy@outlook.com","Adam","Jones","")
+        val databaseService = (context.applicationContext as EmployeeApplication).databaseService
+        val emp = Employee (16,"dummy@outlook.com","Adam","Jones","")
         databaseService.employeeDao().insert(emp)
         return Result.success()
     }

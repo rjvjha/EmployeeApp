@@ -29,7 +29,8 @@ class MainActivity : BaseActivity<MainViewModel>() {
 
         // One time workRequest
         val workRequest = OneTimeWorkRequest.Builder(SaveEmployeeWorkerClass::class.java)
-            .setInitialDelay(1,TimeUnit.MINUTES)
+            .setConstraints(constraints)
+            .setInitialDelay(15,TimeUnit.MINUTES)
             .build()
 
         // periodic workRequest

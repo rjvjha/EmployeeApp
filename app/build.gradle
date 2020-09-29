@@ -81,6 +81,10 @@ dependencies {
     kapt "androidx.room:room-compiler:$room_version"
     implementation "androidx.room:room-rxjava2:$room_version"
 
+    // work Manager
+    implementation "androidx.work:work-runtime:$work_version"
+
+
 
     // Local Unit tests
     testImplementation "junit:junit:$junit_version"

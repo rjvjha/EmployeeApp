@@ -56,13 +56,14 @@ class HomeFragment: BaseFragment<HomeViewModel>() {
 
         viewModel.getEmpList().observe(this, Observer {
           it?.run {
-              listAdapter.appendData(this)}
+              listAdapter.appendDataUsingDiffUtil(this)}
         })
 
         viewModel.empListSorted.observe(this, Observer {
             it?.run {
                 if(viewModel.currentOrder != -1) listAdapter.dataList.clear()
-                listAdapter.appendData(this)}
+                listAdapter.appendData(this)
+            }
         })
     }
 

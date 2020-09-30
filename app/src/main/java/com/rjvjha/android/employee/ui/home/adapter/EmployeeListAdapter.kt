@@ -4,6 +4,7 @@ import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.rjvjha.android.employee.R
 import com.rjvjha.android.employee.data.model.Employee
@@ -31,6 +32,14 @@ class EmployeeListAdapter(private val context: Context, val dataList:ArrayList<E
             notifyDataSetChanged()
         else if (oldCount > 0 && currentCount > oldCount)
             notifyItemRangeChanged(oldCount - 1, currentCount - oldCount)
+    }
+
+    fun appendDataUsingDiffUtil(dataList: List<Employee>){
+        val diffCallback = EmployeeDiffCallback(this.dataList,dataList)
+        val diffResult = DiffUtil.calculateDiff(diffCallback)
+        this.dataList.clear()
+        this.dataList.addAll(dataList)
+        diffResult.dispatchUpdatesTo(this)
     }
 
 
